@@ -1,0 +1,25 @@
+
+.photo {
+
+    max-width: 60px;
+    max-height: 60px;
+    border: 2px solid grey;
+}
+
+.card {
+
+    border: 2px solid blue;
+    border-radius: 2%;
+}
+
+.info {
+
+    border: 1px solid grey;
+    justify-content: space-between;
+}
+
+.title {
+
+    border-bottom: 1px solid grey;
+    border-right: 1px solid grey;
+}
