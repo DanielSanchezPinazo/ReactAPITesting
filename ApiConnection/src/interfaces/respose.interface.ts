@@ -31,3 +31,7 @@ export interface Rating {
 export interface ResultComponentProps {
     selectedCategory: Category | null
 }
+
+export interface ToastComponentProps {
+    permissionToShowError: boolean
+}

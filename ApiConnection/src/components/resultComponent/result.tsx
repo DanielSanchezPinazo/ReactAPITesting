@@ -2,51 +2,53 @@ import { useEffect, useState } from "react";
 import './result.css';
 import { Product, ResultComponentProps } from "../../interfaces/respose.interface";
 import { getProducts, getProductsByCategory } from "../../services/services"
+import { ToastComponent } from "../toastComponent/toastComponent";
 
 export const ResultComponent = ({selectedCategory}: ResultComponentProps) => {
 
     const [ products, setProducts ] = useState<Product[]>([]);
+    const [ permissionToShowError, setPermissionToShowError ] = useState<boolean>(false);
 
-    useEffect(()=>{
+    useEffect( ()=> {
 
-        console.log(selectedCategory);
+        // console.log(selectedCategory);
 
         if (selectedCategory) {
 
-            getProductsByCategory(selectedCategory)            
+            getProductsByCategory( selectedCategory )            
             .then( resp => {
-                if ( resp) {
+                if ( resp ) {
                     setProducts( resp )
-                 console.log(resp);              
+                    // console.log(resp);              
                 }
             })
-            .catch((error)=>{
-                if(error){
-                    console.log(error);    
-                }
+            .catch((error) => {
+                
+               console.log(error);
             })
             .finally();
             
         } else {
 
             getProducts()
-            .then( resp => {
-                if ( resp) {
-                    setProducts( resp )
-                    // console.log(resp);              
-                }
-            })
-            .catch((error)=>{
-                if(error){
-                    console.log(error);    
-                }
-            })
-            .finally();
-        }
-
+                .then( resp => {
+                    if ( resp) {
+                        setProducts( resp )
+                        // console.log(resp);              
+                    }
+                })
+                .catch( () => 
+                
+                    setPermissionToShowError(true)
+                )
+                .finally();
+        }   
+        
     },[selectedCategory])
 
-    return (<div>{ products.map((res:Product, i: number)=>{
+    return (<div>
+        <ToastComponent permissionToShowError = {permissionToShowError} />
+        { products.map((res:Product, i: number)=> {
         return(    
             <article className="card" key={i.toString()}>
                 <span className="title">{i} - <strong>{res.title}</strong></span>
@@ -61,5 +63,5 @@ export const ResultComponent = ({selectedCategory}: ResultComponentProps) => {
                 </header>
             </article>
         )
-    }) }</div>);
+    }) }</div>)
 }

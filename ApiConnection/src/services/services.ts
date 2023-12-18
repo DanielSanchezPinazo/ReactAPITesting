@@ -7,7 +7,7 @@ export async function getProducts() {
        const productList: Product[] = await productsRequest.json();
        return productList;
     } catch (error) {
-       console.log(error);
+        throw new Error();
     }
 
 }
